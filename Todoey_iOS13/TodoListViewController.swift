@@ -43,6 +43,22 @@ class ToDoListViewController: UITableViewController {
         cell.textLabel?.text = itemArray[indexPath.row]
         return cell
     }
+    
+    //MARK: - TableView Delegate Methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Give Checkmark as an accessory if it doesnt have it already
+        // Remove the checkmark when selected if it is already selected.
+        if tableView.cellForRow(at: indexPath)?.accessoryType == UITableViewCell.AccessoryType.none{
+            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        }else{
+            tableView.cellForRow(at: indexPath)?.accessoryType = .none
+        }
+        
+        // The cell flashes grey but it goes back to being deselected and goes back to beig white
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+    }
 }
 
 
