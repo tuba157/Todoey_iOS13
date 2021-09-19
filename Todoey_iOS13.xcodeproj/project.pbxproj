@@ -9,21 +9,23 @@
 /* Begin PBXBuildFile section */
 		953F78A726F740C20071ED7F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953F78A626F740C20071ED7F /* AppDelegate.swift */; };
 		953F78A926F740C20071ED7F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953F78A826F740C20071ED7F /* SceneDelegate.swift */; };
-		953F78AB26F740C20071ED7F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953F78AA26F740C20071ED7F /* ViewController.swift */; };
+		953F78AB26F740C20071ED7F /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953F78AA26F740C20071ED7F /* TodoListViewController.swift */; };
 		953F78AE26F740C20071ED7F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953F78AC26F740C20071ED7F /* Main.storyboard */; };
 		953F78B026F740C70071ED7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 953F78AF26F740C70071ED7F /* Assets.xcassets */; };
 		953F78B326F740C70071ED7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953F78B126F740C70071ED7F /* LaunchScreen.storyboard */; };
+		953F78BB26F7450D0071ED7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953F78BA26F7450D0071ED7F /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		953F78A326F740C20071ED7F /* Todoey_iOS13.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey_iOS13.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		953F78A626F740C20071ED7F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		953F78A826F740C20071ED7F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		953F78AA26F740C20071ED7F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		953F78AA26F740C20071ED7F /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
 		953F78AD26F740C20071ED7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		953F78AF26F740C70071ED7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		953F78B226F740C70071ED7F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		953F78B426F740C70071ED7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		953F78BA26F7450D0071ED7F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,11 +60,12 @@
 			children = (
 				953F78A626F740C20071ED7F /* AppDelegate.swift */,
 				953F78A826F740C20071ED7F /* SceneDelegate.swift */,
-				953F78AA26F740C20071ED7F /* ViewController.swift */,
+				953F78AA26F740C20071ED7F /* TodoListViewController.swift */,
 				953F78AC26F740C20071ED7F /* Main.storyboard */,
 				953F78AF26F740C70071ED7F /* Assets.xcassets */,
 				953F78B126F740C70071ED7F /* LaunchScreen.storyboard */,
 				953F78B426F740C70071ED7F /* Info.plist */,
+				953F78BA26F7450D0071ED7F /* Constants.swift */,
 			);
 			path = Todoey_iOS13;
 			sourceTree = "<group>";
@@ -137,9 +140,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				953F78AB26F740C20071ED7F /* ViewController.swift in Sources */,
+				953F78AB26F740C20071ED7F /* TodoListViewController.swift in Sources */,
 				953F78A726F740C20071ED7F /* AppDelegate.swift in Sources */,
 				953F78A926F740C20071ED7F /* SceneDelegate.swift in Sources */,
+				953F78BB26F7450D0071ED7F /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
