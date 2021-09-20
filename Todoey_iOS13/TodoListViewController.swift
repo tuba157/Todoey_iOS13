@@ -17,7 +17,7 @@ import UIKit
 // SUBCLASSING
 class ToDoListViewController: UITableViewController {
 
-    let itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+    var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +58,42 @@ class ToDoListViewController: UITableViewController {
         // The cell flashes grey but it goes back to being deselected and goes back to beig white
         tableView.deselectRow(at: indexPath, animated: true)
         
+    }
+    
+    //MARK: - Add new items
+    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
+        // textField has the scope of the whole addButtonPressed IBAction
+        // Store and read data from a local variable inside the IBAction
+        var textField = UITextField()
+        
+        let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
+        
+        let action = UIAlertAction(title: "Add Item", style: .default) {
+            (action) in
+            // Closure
+            // What will happen once the user clicks the Add Item button on our UIAlert
+            // Get what is in alertTextField and save it to the itemArray
+            // Unwrap it because it is an optional
+            self.itemArray.append(textField.text!)
+
+            self.tableView.reloadData()
+        }
+        
+        // Adding a TextField or an Action to an alert is quite similar
+        alert.addTextField {
+            (alertTextField) in
+            // Inside the closure
+            alertTextField.placeholder = "Create new item"
+            textField = alertTextField
+            
+            // It doesnt work because this closure only gets triggered once the textField has been added to the alert
+            // print(alertTextField.text)
+        }
+        
+        alert.addAction(action)
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 
