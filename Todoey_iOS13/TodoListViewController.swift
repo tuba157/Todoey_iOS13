@@ -19,9 +19,18 @@ class ToDoListViewController: UITableViewController {
 
     var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
     
+    // Using UserDefaults to Store PersistentLocal Data
+    // An Interface to the User's defaults database, where you store key-value pairs persistently across launches of your app
+    // UserDefault is going to be saved in .plist file --> KEY-VALUE PAIR
+    let defaults = UserDefaults.standard
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        if let items = defaults.array(forKey: "ToDoListArray") as? [String]{
+            itemArray = items
+        }
     }
 
     //MARK: - Tableview Datasource Methods
@@ -76,6 +85,9 @@ class ToDoListViewController: UITableViewController {
             // Get what is in alertTextField and save it to the itemArray
             // Unwrap it because it is an optional
             self.itemArray.append(textField.text!)
+            
+            // Save updated itemArray
+            self.defaults.set(self.itemArray, forKey: "ToDoListArray")
 
             self.tableView.reloadData()
         }
