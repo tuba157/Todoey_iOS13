@@ -5,7 +5,12 @@
 //  Created by Tuba Yalcinoz based on App Brewery on 19.09.21.
 //
 
+// DELETE A NSManagedObject --> order is IMPORTANT
+// context.delete(itemArray[indexPath.row])
+// itemArray.remove (at: indexPath.row)]
+
 import UIKit
+import CoreData
 // We inherited from UITableViewController
 
 // Alternatively we can keep the UIViewController then we have to add
@@ -17,19 +22,8 @@ import UIKit
 class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
-    
-    // Using UserDefaults to Store PersistentLocal Data
-    // An Interface to the User's defaults database, where you store key-value pairs persistently across launches of your app
-    // UserDefault is going to be saved in .plist file --> KEY-VALUE PAIR
-    // let defaults = UserDefaults.standard
-    // We are going to create our own .plist instead of using user defaults to save our own Objects.
-    
-    // Create file path
-    // File Manager provides an interface to the contents of the file system
-    // Singleton --> .default it means that it is shared
-    // We are getting the first item from the array
-    // .appendingPathComponent(pathComponent: String)  TO CREATE OUR OWN .plist
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    // AppDelegate is a class we need the object (use singleton) of the class to use context
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,14 +71,8 @@ class ToDoListViewController: UITableViewController {
         // Remove the checkmark when selected if it is already selected.
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
-        // Function saveItem also reload the data
+        // Function saveItem also reload the data --> UPDATE fom CRUD
         saveItems()
-        
-        //        if tableView.cellForRow(at: indexPath)?.accessoryType == UITableViewCell.AccessoryType.none{
-        //            tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        //        }else{
-        //            tableView.cellForRow(at: indexPath)?.accessoryType = .none
-        //        }
         
         // The cell flashes grey but it goes back to being deselected and goes back to beig white
         tableView.deselectRow(at: indexPath, animated: true)
@@ -105,8 +93,12 @@ class ToDoListViewController: UITableViewController {
             // What will happen once the user clicks the Add Item button on our UIAlert
             // Get what is in alertTextField and save it to the itemArray
             // Unwrap it because it is an optional
-            let newItem = Item()
+            
+            
+            // Initialize CoreData Object --> NSManagedObject
+            let newItem = Item(context: self.context)
             newItem.title = textField.text!
+            newItem.done = false
             self.itemArray.append(newItem)
             
             // Save updated itemArray
@@ -133,26 +125,24 @@ class ToDoListViewController: UITableViewController {
     //MARK: - Model Manupulation Methods
     
     func saveItems(){
-        let encoder = PropertyListEncoder()
         
+        // Commit context to perminant storage inside our persistentContainer (lazy var persistentContainer)
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to:dataFilePath!)
+            try context.save()
         }catch{
-            print("Error encoding item array,  \(error)")
+            print("Error saving context \(error)")
         }
         self.tableView.reloadData()
     }
     
     func loadItems(){
-        // try? to unwrap
-        if let data = try? Data(contentsOf: dataFilePath!){
-            let decoder = PropertyListDecoder()
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            }catch { 
-                print("Error decoding item array \(error)")
-            }
+        // Specify the datatype of the output
+        let request: NSFetchRequest<Item> = Item.fetchRequest()
+        do{
+            // Fetch request hols what is currently in the container.
+            itemArray = try context.fetch(request)
+        }catch{
+            print("Error fetching data from context \(error)")
         }
     }
 }
