@@ -8,6 +8,7 @@
 // DELETE A NSManagedObject --> order is IMPORTANT
 // context.delete(itemArray[indexPath.row])
 // itemArray.remove (at: indexPath.row)]
+// saveItems()
 
 import UIKit
 import CoreData
@@ -19,6 +20,7 @@ import CoreData
 // But by changing to UITableViewController all of that is outamated from the Xcode.
 
 // SUBCLASSING
+// UISearchBarDelegate sees if there is a change on search bar
 class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
@@ -135,16 +137,60 @@ class ToDoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    func loadItems(){
-        // Specify the datatype of the output
-        let request: NSFetchRequest<Item> = Item.fetchRequest()
+    // with is extternal parameter default patches all of the items from persistance store
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
         do{
             // Fetch request hols what is currently in the container.
             itemArray = try context.fetch(request)
         }catch{
             print("Error fetching data from context \(error)")
         }
+        
+        tableView.reloadData()
     }
+    
+    
 }
 
+//MARK: - SearchBar Delegate Methods
 
+// Using extensions for specific segments and this way easy debugging
+extension ToDoListViewController:  UISearchBarDelegate{
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        // Create requset to read data from the context
+        // requset returns an array of Item's.
+        let request : NSFetchRequest<Item> = Item.fetchRequest()
+        
+        // Filtering  --> Predicate specifies how we want to query our database
+        // Looking for the title attribute of each of our Items in Itemarray
+        // %@ --> to look for the argument
+        // [cd] --> case insensitive
+        // Querylanguage
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        request.predicate = predicate
+        
+        // Sortting alphabettically
+        let sortDescriptr = NSSortDescriptor(key: "title", ascending: true)
+        
+        // Array of multiple SortDescriptors but also can have one SortDescriptor
+        request.sortDescriptors = [sortDescriptr]
+        
+        loadItems(with: request)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchBar.text?.count == 0 {
+            loadItems()
+            
+            // DispatchQueue manages the execution of work items. Update the UI
+            DispatchQueue.main.async {
+                // It should no longer be the thing, that is selected.
+                searchBar.resignFirstResponder()
+            }
+            
+            
+        }
+    }
+}
