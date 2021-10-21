@@ -24,13 +24,20 @@ import CoreData
 class ToDoListViewController: UITableViewController {
     
     var itemArray = [Item]()
+    
+    var selectedCategory : Category? {
+        didSet{
+            loadItems()
+        }
+    }
     // AppDelegate is a class we need the object (use singleton) of the class to use context
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
-   
-        loadItems()
+        
+        // loadItems is now called inside didSet
+        // loadItems()
     }
     
     //MARK: - Tableview Datasource Methods
@@ -89,7 +96,7 @@ class ToDoListViewController: UITableViewController {
         
         let alert = UIAlertController(title: "Add New Todoey Item", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add Item", style: .default) {
+        let action = UIAlertAction(title: "Add Item", style: .default) { [self]
             (action) in
             // Closure
             // What will happen once the user clicks the Add Item button on our UIAlert
@@ -101,6 +108,7 @@ class ToDoListViewController: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.done = false
+            newItem.parentCategory = self.selectedCategory
             self.itemArray.append(newItem)
             
             // Save updated itemArray
@@ -137,8 +145,19 @@ class ToDoListViewController: UITableViewController {
         self.tableView.reloadData()
     }
     
-    // with is extternal parameter default patches all of the items from persistance store
-    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()){
+    // with is extternal parameter default fetches all of the NSManagedObjects from persistance store
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil){
+        
+        // NSPredicate = A definition of logical conditions used to constrain a search either for a fetch or for in memory filtering.
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+        
+        if let additionalPredicate = predicate {
+            // NSCompoundPredicate is a specialized predicate that evaluates logical combinations of other predicates
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        }else{
+            request.predicate = categoryPredicate
+        }
+
         do{
             // Fetch request hols what is currently in the container.
             itemArray = try context.fetch(request)
@@ -177,7 +196,7 @@ extension ToDoListViewController:  UISearchBarDelegate{
         // Array of multiple SortDescriptors but also can have one SortDescriptor
         request.sortDescriptors = [sortDescriptr]
         
-        loadItems(with: request)
+        loadItems(with: request, predicate: predicate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {

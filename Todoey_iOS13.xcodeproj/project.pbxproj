@@ -15,6 +15,7 @@
 		953F78B326F740C70071ED7F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 953F78B126F740C70071ED7F /* LaunchScreen.storyboard */; };
 		953F78BB26F7450D0071ED7F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953F78BA26F7450D0071ED7F /* Constants.swift */; };
 		95AD9DDF270C4D1100EBF5E0 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 95AD9DDD270C4D1100EBF5E0 /* DataModel.xcdatamodeld */; };
+		95CFE6452718CF4200597A0F /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95CFE6442718CF4200597A0F /* CategoryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		953F78B426F740C70071ED7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		953F78BA26F7450D0071ED7F /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		95AD9DDE270C4D1100EBF5E0 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		95CFE6442718CF4200597A0F /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 		95B6591E26FB504800D111CD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				95CFE6442718CF4200597A0F /* CategoryViewController.swift */,
 				953F78AA26F740C20071ED7F /* TodoListViewController.swift */,
 			);
 			path = Controllers;
@@ -179,6 +182,7 @@
 				953F78A726F740C20071ED7F /* AppDelegate.swift in Sources */,
 				95AD9DDF270C4D1100EBF5E0 /* DataModel.xcdatamodeld in Sources */,
 				953F78A926F740C20071ED7F /* SceneDelegate.swift in Sources */,
+				95CFE6452718CF4200597A0F /* CategoryViewController.swift in Sources */,
 				953F78BB26F7450D0071ED7F /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
